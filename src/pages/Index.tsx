@@ -1,37 +1,36 @@
-import { AppSidebar } from "@/components/AppSidebar";
+import { AppLayout } from "@/components/AppLayout";
+import { useI18n } from "@/contexts/I18nContext";
 
 const Index = () => {
+  const { t } = useI18n();
+  const stats = [
+    { key: "stat.activeBots", value: "12" },
+    { key: "stat.dailyPnL", value: "+4.8%" },
+    { key: "stat.totalTrades", value: "1,284" },
+  ];
+
   return (
-    <div dir="rtl" className="dark min-h-screen flex w-full bg-background text-foreground">
-      <AppSidebar />
+    <AppLayout>
+      <section className="px-4 sm:px-8 py-8 max-w-6xl mx-auto">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2">
+          {t("welcome.title")}{" "}
+          <span className="gradient-text">Botynex Global</span>
+        </h1>
+        <p className="text-muted-foreground">{t("welcome.subtitle")}</p>
 
-      <main className="flex-1 p-8 overflow-auto">
-        <div className="max-w-4xl">
-          <h1 className="text-3xl font-bold mb-2">
-            أهلاً بك في <span className="gradient-text">Botynex Global</span>
-          </h1>
-          <p className="text-muted-foreground">
-            منصة احترافية لروبوتات التداول المدعومة بالذكاء الاصطناعي.
-          </p>
-
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { label: "الروبوتات النشطة", value: "12" },
-              { label: "الأرباح اليومية", value: "+4.8%" },
-              { label: "إجمالي الصفقات", value: "1,284" },
-            ].map((s) => (
-              <div
-                key={s.label}
-                className="rounded-xl border border-border bg-card p-5"
-              >
-                <p className="text-sm text-muted-foreground">{s.label}</p>
-                <p className="text-2xl font-bold mt-1 gradient-text">{s.value}</p>
-              </div>
-            ))}
-          </div>
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+          {stats.map((s) => (
+            <div
+              key={s.key}
+              className="rounded-xl border border-border bg-card p-5 transition-colors"
+            >
+              <p className="text-sm text-muted-foreground">{t(s.key)}</p>
+              <p className="text-2xl font-bold mt-1 gradient-text">{s.value}</p>
+            </div>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+    </AppLayout>
   );
 };
 
