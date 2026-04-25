@@ -1,16 +1,38 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { AppSidebar } from "@/components/AppSidebar";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div dir="rtl" className="dark min-h-screen flex w-full bg-background text-foreground">
+      <AppSidebar />
+
+      <main className="flex-1 p-8 overflow-auto">
+        <div className="max-w-4xl">
+          <h1 className="text-3xl font-bold mb-2">
+            أهلاً بك في <span className="gradient-text">Botynex Global</span>
+          </h1>
+          <p className="text-muted-foreground">
+            منصة احترافية لروبوتات التداول المدعومة بالذكاء الاصطناعي.
+          </p>
+
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { label: "الروبوتات النشطة", value: "12" },
+              { label: "الأرباح اليومية", value: "+4.8%" },
+              { label: "إجمالي الصفقات", value: "1,284" },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="rounded-xl border border-border bg-card p-5"
+              >
+                <p className="text-sm text-muted-foreground">{s.label}</p>
+                <p className="text-2xl font-bold mt-1 gradient-text">{s.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
