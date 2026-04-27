@@ -11,21 +11,24 @@ interface AppLayoutProps {
 // Map sidebar item ids -> routes (only those with real pages)
 const navRoutes: Record<string, string> = {
   dashboard: "/",
+  marketplace: "/marketplace",
   platforms: "/platforms",
 };
 
 const bottomRoutes: Record<string, string> = {
   home: "/",
-  market: "/platforms",
+  market: "/marketplace",
 };
 
 function deriveActiveNav(pathname: string): string {
+  if (pathname.startsWith("/marketplace")) return "marketplace";
   if (pathname.startsWith("/platforms")) return "platforms";
   if (pathname === "/") return "dashboard";
   return "dashboard";
 }
 
 function deriveActiveBottom(pathname: string): string {
+  if (pathname.startsWith("/marketplace")) return "market";
   if (pathname.startsWith("/platforms")) return "market";
   if (pathname === "/") return "home";
   return "home";

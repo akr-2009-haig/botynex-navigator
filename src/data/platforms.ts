@@ -21,6 +21,7 @@ export interface Platform {
 
 export interface BotPreview {
   id: string;
+  slug?: string;
   name: string;
   strategy: { en: string; ar: string };
   monthlyReturn: number; // %
@@ -29,6 +30,11 @@ export interface BotPreview {
   risk: "low" | "medium" | "high";
   platforms: string[]; // platform ids
   tag?: "top" | "new" | "pro";
+  /** Price in USD; 0 = free */
+  price?: number;
+  description?: { en: string; ar: string };
+  reviewsCount?: number;
+  drawdown?: number; // %
 }
 
 export const platforms: Platform[] = [
@@ -346,99 +352,171 @@ export const platforms: Platform[] = [
 export const bots: BotPreview[] = [
   {
     id: "alpha-grid",
+    slug: "alpha-grid-pro",
     name: "Alpha Grid Pro",
     strategy: { en: "Grid Trading", ar: "تداول شبكي" },
     monthlyReturn: 12.4,
     winRate: 68,
     rating: 4.8,
+    reviewsCount: 412,
+    drawdown: 8,
     risk: "medium",
     platforms: ["binance", "bybit", "okx"],
     tag: "top",
+    price: 79,
+    description: {
+      en: "Smart grid bot that profits from sideways and ranging markets with adaptive spacing.",
+      ar: "روبوت شبكي ذكي يحقق أرباحًا من الأسواق العرضية بمسافات متكيّفة.",
+    },
   },
   {
     id: "scalp-x",
+    slug: "scalpx-ai",
     name: "ScalpX AI",
     strategy: { en: "AI Scalping", ar: "سكالبينغ بالذكاء الاصطناعي" },
     monthlyReturn: 18.7,
     winRate: 72,
     rating: 4.7,
+    reviewsCount: 318,
+    drawdown: 14,
     risk: "high",
     platforms: ["binance", "bybit", "mexc", "bitget"],
     tag: "pro",
+    price: 149,
+    description: {
+      en: "AI-driven scalper that captures micro-trends on 1m–5m timeframes with ultra-fast execution.",
+      ar: "سكالبر مدعوم بالذكاء الاصطناعي يلتقط الاتجاهات الدقيقة على فريمات 1د–5د بتنفيذ فائق السرعة.",
+    },
   },
   {
     id: "trend-rider",
+    slug: "trend-rider",
     name: "Trend Rider",
     strategy: { en: "Trend Following", ar: "تتبع الاتجاه" },
     monthlyReturn: 8.3,
     winRate: 64,
     rating: 4.5,
+    reviewsCount: 256,
+    drawdown: 6,
     risk: "low",
     platforms: ["mt4", "mt5", "ctrader"],
     tag: "top",
+    price: 49,
+    description: {
+      en: "Classic trend-following EA with strong risk management and multi-timeframe confirmation.",
+      ar: "روبوت تتبع اتجاه كلاسيكي بإدارة مخاطر قوية وتأكيد متعدد الأطر الزمنية.",
+    },
   },
   {
     id: "fx-pulse",
+    slug: "fx-pulse-ea",
     name: "FX Pulse EA",
     strategy: { en: "Breakout EA", ar: "روبوت الاختراق" },
     monthlyReturn: 9.6,
     winRate: 61,
     rating: 4.4,
+    reviewsCount: 189,
+    drawdown: 10,
     risk: "medium",
     platforms: ["mt4", "mt5"],
+    price: 59,
+    description: {
+      en: "Breakout strategy EA targeting major forex pairs during London/New York sessions.",
+      ar: "روبوت اختراق يستهدف أزواج الفوركس الرئيسية خلال جلسات لندن ونيويورك.",
+    },
   },
   {
     id: "tv-signal",
+    slug: "tv-signal-hub",
     name: "TV Signal Hub",
     strategy: { en: "Webhook Signals", ar: "إشارات Webhook" },
     monthlyReturn: 11.1,
     winRate: 66,
     rating: 4.6,
+    reviewsCount: 142,
+    drawdown: 7,
     risk: "medium",
     platforms: ["tradingview"],
     tag: "new",
+    price: 0,
+    description: {
+      en: "Free TradingView webhook router that connects your Pine Script alerts to any exchange.",
+      ar: "موجّه Webhook مجاني من TradingView يربط تنبيهات Pine Script بأي منصة تداول.",
+    },
   },
   {
     id: "nova-arb",
+    slug: "nova-arbitrage",
     name: "Nova Arbitrage",
     strategy: { en: "Cross-Exchange Arb", ar: "موازنة بين المنصات" },
     monthlyReturn: 6.9,
     winRate: 81,
     rating: 4.6,
+    reviewsCount: 98,
+    drawdown: 3,
     risk: "low",
     platforms: ["binance", "kucoin", "okx", "kraken"],
+    price: 99,
+    description: {
+      en: "Detects price gaps across exchanges and executes risk-free arbitrage in milliseconds.",
+      ar: "يكتشف فجوات الأسعار بين المنصات وينفّذ صفقات موازنة بدون مخاطر خلال أجزاء من الثانية.",
+    },
   },
   {
     id: "dca-master",
+    slug: "dca-master",
     name: "DCA Master",
     strategy: { en: "DCA Strategy", ar: "استراتيجية DCA" },
     monthlyReturn: 5.4,
     winRate: 74,
     rating: 4.3,
+    reviewsCount: 211,
+    drawdown: 4,
     risk: "low",
     platforms: ["binance", "coinbase", "kraken", "cryptocom"],
     tag: "new",
+    price: 0,
+    description: {
+      en: "Automated dollar-cost-averaging bot — perfect for long-term crypto investors.",
+      ar: "روبوت متوسّط التكلفة بالدولار آليًا — مثالي للمستثمرين على المدى البعيد.",
+    },
   },
   {
     id: "futures-edge",
+    slug: "futures-edge",
     name: "Futures Edge",
     strategy: { en: "Momentum Futures", ar: "زخم العقود" },
     monthlyReturn: 22.5,
     winRate: 58,
     rating: 4.5,
+    reviewsCount: 167,
+    drawdown: 18,
     risk: "high",
     platforms: ["bybit", "okx", "bitget"],
     tag: "pro",
+    price: 199,
+    description: {
+      en: "Aggressive momentum bot for perpetual futures — high reward, high risk.",
+      ar: "روبوت زخم عدواني للعقود الدائمة — عائد مرتفع ومخاطرة مرتفعة.",
+    },
   },
   {
     id: "ninja-trend",
+    slug: "ninja-trend",
     name: "Ninja Trend",
     strategy: { en: "Multi-TF Trend", ar: "اتجاه متعدد الأطر" },
     monthlyReturn: 7.8,
     winRate: 63,
     rating: 4.2,
+    reviewsCount: 76,
+    drawdown: 9,
     risk: "medium",
     platforms: ["ninjatrader", "mt5"],
+    price: 39,
+    description: {
+      en: "Multi-timeframe trend bot tuned for futures markets with conservative position sizing.",
+      ar: "روبوت اتجاه متعدد الأطر مضبوط لأسواق العقود مع حجم مراكز محافظ.",
+    },
   },
 ];
 
@@ -448,4 +526,12 @@ export function getPlatformBySlug(slug: string) {
 
 export function getBotsForPlatform(platformId: string) {
   return bots.filter((b) => b.platforms.includes(platformId));
+}
+
+export function getBotBySlug(slug: string) {
+  return bots.find((b) => b.slug === slug || b.id === slug);
+}
+
+export function getPlatformById(id: string) {
+  return platforms.find((p) => p.id === id);
 }

@@ -9,6 +9,8 @@ import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Platforms from "./pages/Platforms.tsx";
 import PlatformDetail from "./pages/PlatformDetail.tsx";
+import Marketplace from "./pages/Marketplace.tsx";
+import BotDetail from "./pages/BotDetail.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/marketplace/:slug" element={<BotDetail />} />
               <Route path="/platforms" element={<Platforms />} />
               <Route path="/platforms/:slug" element={<PlatformDetail />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
