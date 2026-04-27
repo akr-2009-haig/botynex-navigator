@@ -21,6 +21,7 @@ export interface Platform {
 
 export interface BotPreview {
   id: string;
+  slug?: string;
   name: string;
   strategy: { en: string; ar: string };
   monthlyReturn: number; // %
@@ -29,6 +30,11 @@ export interface BotPreview {
   risk: "low" | "medium" | "high";
   platforms: string[]; // platform ids
   tag?: "top" | "new" | "pro";
+  /** Price in USD; 0 = free */
+  price?: number;
+  description?: { en: string; ar: string };
+  reviewsCount?: number;
+  drawdown?: number; // %
 }
 
 export const platforms: Platform[] = [
