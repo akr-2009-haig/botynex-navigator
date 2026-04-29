@@ -12,6 +12,7 @@ import {
   Heart,
   Bell,
   Settings,
+  HelpCircle,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -40,6 +41,7 @@ const navItems: NavItem[] = [
   { id: "favorites", labelKey: "nav.favorites", icon: Heart },
   { id: "notifications", labelKey: "nav.notifications", icon: Bell, badge: 3 },
   { id: "settings", labelKey: "nav.settings", icon: Settings },
+  { id: "help", labelKey: "nav.help", icon: HelpCircle },
 ];
 
 interface AppSidebarProps {

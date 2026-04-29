@@ -8,29 +8,51 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 
-// Map sidebar item ids -> routes (only those with real pages)
 const navRoutes: Record<string, string> = {
   dashboard: "/",
   marketplace: "/marketplace",
+  top: "/top",
+  new: "/new",
+  pro: "/pro",
   platforms: "/platforms",
+  strategies: "/strategies",
+  portfolio: "/portfolio",
+  myBots: "/my-bots",
+  favorites: "/favorites",
+  notifications: "/notifications",
+  settings: "/settings",
+  help: "/help",
 };
 
 const bottomRoutes: Record<string, string> = {
   home: "/",
   market: "/marketplace",
+  favorites: "/favorites",
+  guides: "/help",
+  quick: "/portfolio",
 };
 
 function deriveActiveNav(pathname: string): string {
   if (pathname.startsWith("/marketplace")) return "marketplace";
   if (pathname.startsWith("/platforms")) return "platforms";
-  if (pathname === "/") return "dashboard";
+  if (pathname.startsWith("/top")) return "top";
+  if (pathname.startsWith("/new")) return "new";
+  if (pathname.startsWith("/pro")) return "pro";
+  if (pathname.startsWith("/strategies")) return "strategies";
+  if (pathname.startsWith("/portfolio")) return "portfolio";
+  if (pathname.startsWith("/my-bots")) return "myBots";
+  if (pathname.startsWith("/favorites")) return "favorites";
+  if (pathname.startsWith("/notifications")) return "notifications";
+  if (pathname.startsWith("/settings")) return "settings";
+  if (pathname.startsWith("/help")) return "help";
   return "dashboard";
 }
 
 function deriveActiveBottom(pathname: string): string {
-  if (pathname.startsWith("/marketplace")) return "market";
-  if (pathname.startsWith("/platforms")) return "market";
-  if (pathname === "/") return "home";
+  if (pathname.startsWith("/marketplace") || pathname.startsWith("/platforms")) return "market";
+  if (pathname.startsWith("/favorites")) return "favorites";
+  if (pathname.startsWith("/portfolio")) return "quick";
+  if (pathname.startsWith("/help")) return "guides";
   return "home";
 }
 
@@ -43,12 +65,10 @@ export function AppLayout({ children }: AppLayoutProps) {
   const activeBottom = deriveActiveBottom(pathname);
 
   const goHome = () => navigate("/");
-
   const handleNavSelect = (id: string) => {
     const route = navRoutes[id];
     if (route) navigate(route);
   };
-
   const handleBottomSelect = (id: string) => {
     const route = bottomRoutes[id];
     if (route) navigate(route);
