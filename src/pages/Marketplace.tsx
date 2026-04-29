@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 type PriceFilter = "all" | "free" | "lt50" | "50to100" | "gt100";
 type RatingFilter = "all" | "4plus" | "3plus";
 
-const STORAGE_FAV = "botynex-favorites";
+
 
 const Marketplace = () => {
   const { t, dir } = useI18n();
