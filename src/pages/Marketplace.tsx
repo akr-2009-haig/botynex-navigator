@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { AppLayout } from "@/components/AppLayout";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useI18n } from "@/contexts/I18nContext";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { bots, platforms } from "@/data/platforms";
 import { MarketplaceBotCard } from "@/components/marketplace/MarketplaceBotCard";
 import { cn } from "@/lib/utils";
@@ -14,36 +16,24 @@ import { cn } from "@/lib/utils";
 type PriceFilter = "all" | "free" | "lt50" | "50to100" | "gt100";
 type RatingFilter = "all" | "4plus" | "3plus";
 
-const STORAGE_FAV = "botynex-favorites";
+
 
 const Marketplace = () => {
   const { t, dir } = useI18n();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const [searchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [platformFilter, setPlatformFilter] = useState<string>("all");
   const [strategyFilter, setStrategyFilter] = useState<string>("all");
   const [priceFilter, setPriceFilter] = useState<PriceFilter>("all");
   const [ratingFilter, setRatingFilter] = useState<RatingFilter>("all");
   const [showFilters, setShowFilters] = useState(false);
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_FAV) || "[]");
-    } catch {
-      return [];
-    }
-  });
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) => {
-      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-      try {
-        localStorage.setItem(STORAGE_FAV, JSON.stringify(next));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
-  };
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q) setQuery(q);
+  }, [searchParams]);
+
 
   const strategies = useMemo(() => {
     const set = new Map<string, { en: string; ar: string }>();
@@ -240,7 +230,7 @@ const Marketplace = () => {
                 key={b.id}
                 bot={b}
                 index={i}
-                isFavorite={favorites.includes(b.id)}
+                isFavorite={isFavorite(b.id)}
                 onToggleFavorite={toggleFavorite}
               />
             ))}

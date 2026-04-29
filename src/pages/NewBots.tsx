@@ -1,0 +1,33 @@
+import { AppLayout } from "@/components/AppLayout";
+import { PageHeader } from "@/components/PageHeader";
+import { MarketplaceBotCard } from "@/components/marketplace/MarketplaceBotCard";
+import { useI18n } from "@/contexts/I18nContext";
+import { useFavorites } from "@/contexts/FavoritesContext";
+import { bots } from "@/data/platforms";
+
+const NewBots = () => {
+  const { t } = useI18n();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const list = bots.filter((b) => b.tag === "new").concat(bots.slice(0, 6)).slice(0, 12);
+
+  return (
+    <AppLayout>
+      <section className="px-4 sm:px-8 py-8 max-w-7xl mx-auto">
+        <PageHeader title={t("new.title")} subtitle={t("new.subtitle")} highlight="🆕" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {list.map((b, i) => (
+            <MarketplaceBotCard
+              key={b.id + i}
+              bot={b}
+              index={i}
+              isFavorite={isFavorite(b.id)}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))}
+        </div>
+      </section>
+    </AppLayout>
+  );
+};
+
+export default NewBots;
