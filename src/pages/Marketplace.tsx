@@ -20,32 +20,20 @@ const STORAGE_FAV = "botynex-favorites";
 
 const Marketplace = () => {
   const { t, dir } = useI18n();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const [searchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [platformFilter, setPlatformFilter] = useState<string>("all");
   const [strategyFilter, setStrategyFilter] = useState<string>("all");
   const [priceFilter, setPriceFilter] = useState<PriceFilter>("all");
   const [ratingFilter, setRatingFilter] = useState<RatingFilter>("all");
   const [showFilters, setShowFilters] = useState(false);
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_FAV) || "[]");
-    } catch {
-      return [];
-    }
-  });
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) => {
-      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-      try {
-        localStorage.setItem(STORAGE_FAV, JSON.stringify(next));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
-  };
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q) setQuery(q);
+  }, [searchParams]);
+
 
   const strategies = useMemo(() => {
     const set = new Map<string, { en: string; ar: string }>();
