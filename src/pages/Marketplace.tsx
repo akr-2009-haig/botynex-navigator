@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { AppLayout } from "@/components/AppLayout";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useI18n } from "@/contexts/I18nContext";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { bots, platforms } from "@/data/platforms";
 import { MarketplaceBotCard } from "@/components/marketplace/MarketplaceBotCard";
 import { cn } from "@/lib/utils";
