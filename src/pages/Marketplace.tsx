@@ -230,7 +230,7 @@ const Marketplace = () => {
                 key={b.id}
                 bot={b}
                 index={i}
-                isFavorite={favorites.includes(b.id)}
+                isFavorite={isFavorite(b.id)}
                 onToggleFavorite={toggleFavorite}
               />
             ))}
